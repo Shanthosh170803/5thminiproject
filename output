@@ -1,14 +1,40 @@
-import { Routes } from '@angular/router';
-import { About } from './components/about/about';
-import { Plans } from './components/plans/plans';
-import { PlanDetails} from './components/plan-details/plan-details';
-import { Payment } from './components/payment/payment';
+export class CalculateComponent {
+ 
+  premiumAmount: number | null = null;
+ 
+  constructor(private fb: FormBuilder) {}
+ 
+  insuranceForm = this.fb.group({
+    age: ['', [Validators.required, Validators.min(1)]],
+    income: ['', Validators.required],
+    healthCondition: ['', Validators.required]
+  });
+ 
+  calculatePremium() {
+    const age = Number(this.insuranceForm.value.age);
+    const income = Number(this.insuranceForm.value.income);
+    const health = this.insuranceForm.value.healthCondition;
+ 
+    let premium = 2500; // base amount
+ 
+    // 🔹 Rule-based logic
+    if (age > 40) premium += 1000;
+    if (income > 500000) premium += 500;
+    if (health === 'yes') premium += 1500;
+ 
+    this.premiumAmount = premium;
+  }
+}
+----------------------------------------------
+Application bundle generation failed. [0.139 seconds] - 2025-12-24T06:25:02.037Z
 
-export const routes: Routes = [
-  { path: '', redirectTo: 'plans', pathMatch: 'full' },
-  { path: 'plans', component: Plans },
-  { path: 'about', component: About },
-  { path: 'plan/:id', component: PlanDetails },
-  { path: 'payment', component: Payment },
+X [ERROR] TS2729: Property 'fb' is used before its initialization. [plugin angular-compiler]
 
-];
+    src/app/components/calculate/calculate.ts:28:23:
+      28 │   insuranceForm = this.fb.group({
+         ╵                        ~~
+
+  'fb' is declared here.
+
+    src/app/components/calculate/calculate.ts:26:14:
+      26 │   constructor(private fb: FormBuilder) {}
