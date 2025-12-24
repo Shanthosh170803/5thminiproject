@@ -1,16 +1,9 @@
-Application bundle generation failed. [2.131 seconds] - 2025-12-24T09:26:21.422Z
+below is my old main.ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app/app.config';
+import { App } from './app/app';
 
-X [ERROR] TS2729: Property 'fb' is used before its initialization. [plugin angular-compiler]
+bootstrapApplication(App, appConfig)
+  .catch((err) => console.error(err));
 
-    src/app/components/payment/payment.ts:30:21:
-      30 │   paymentForm = this.fb.group({
-         ╵                      ~~
-
-  'fb' is declared here.
-
-    src/app/components/payment/payment.ts:38:4:
-      38 │     private fb: FormBuilder
-         ╵     ~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Watch mode enabled. Watching for file changes...
+generate the updated main.ts
