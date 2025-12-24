@@ -1,22 +1,9 @@
-C:\Users\shanthosh.s1\Angular\fifthproject\insurance-service>npx ng serve
-Browser bundles
-Initial chunk files  | Names            |  Raw size
-main.js              | main             |  15.49 kB | 
-styles.css           | styles           |   8.81 kB | 
+Application bundle generation failed. [0.186 seconds] - 2025-12-24T06:01:54.500Z
 
-                     | Initial total    |  24.30 kB
+X [ERROR] NG2008: Could not find template file './plans.component.html'. [plugin angular-compiler]
+
+    src/app/components/plans/plans.ts:13:15:
+      13 │   templateUrl: './plans.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-Server bundles      
-Initial chunk files  | Names            |  Raw size
-main.server.mjs      | main.server      |  16.78 kB | 
-server.mjs           | server           |   1.81 kB | 
-polyfills.server.mjs | polyfills.server | 243 bytes | 
-
-Watch mode enabled. Watching for file changes...
-NOTE: Raw file sizes do not reflect development server per-request transformations.
-  ➜  Local:   http://localhost:4200/
-  ➜  press h + enter to show help
-NG02801: Angular detected that `HttpClient` is not configured to use `fetch` APIs. It's strongly recommended to enable `fetch` for applications that use Server-Side Rendering for better performance and compatibility. To enable `fetch`, add the `withFetch()` to the `provideHttpClient()` call at the root of the application.   
-(node:17200) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
-(Use `node --trace-deprecation ...` to show where the warning was created)
