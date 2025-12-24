@@ -1,9 +1,14 @@
-Application bundle generation failed. [0.186 seconds] - 2025-12-24T06:01:54.500Z
+import { Routes } from '@angular/router';
+import { About } from './components/about/about';
+import { Plans } from './components/plans/plans';
+import { PlanDetails} from './components/plan-details/plan-details';
+import { Payment } from './components/payment/payment';
 
-X [ERROR] NG2008: Could not find template file './plans.component.html'. [plugin angular-compiler]
+export const routes: Routes = [
+  { path: '', redirectTo: 'plans', pathMatch: 'full' },
+  { path: 'plans', component: Plans },
+  { path: 'about', component: About },
+  { path: 'plan/:id', component: PlanDetails },
+  { path: 'payment', component: Payment },
 
-    src/app/components/plans/plans.ts:13:15:
-      13 │   templateUrl: './plans.component.html',
-         ╵                ~~~~~~~~~~~~~~~~~~~~~~~~
-
-
+];
