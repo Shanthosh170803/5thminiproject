@@ -13,15 +13,6 @@ main.server.mjs      | main.server      |  16.78 kB |
 server.mjs           | server           |   1.81 kB | 
 polyfills.server.mjs | polyfills.server | 243 bytes | 
 
-Application bundle generation complete. [2.129 seconds] - 2025-12-24T05:51:19.483Z
-
-▲ [WARNING] Expected identifier but found "/" [plugin angular-compiler] [css-syntax-error]
-
-    angular:styles/component:css;450ac9bf94b4cb795313ed781916be3d1314f38e0eb2a6a3f050786355f5e46e;C:/Users/shanthosh.s1/Angular/fifthproject/insurance-service/src/app/components/plans/plans.ts:1:1:
-      1 │ ./plans.component.css
-        ╵  ^
-
-
 Watch mode enabled. Watching for file changes...
 NOTE: Raw file sizes do not reflect development server per-request transformations.
   ➜  Local:   http://localhost:4200/
