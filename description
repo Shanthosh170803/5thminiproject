@@ -124,3 +124,6 @@ The following requirements should be met:Ensure you have accomplished the follow
   ●Check if all the planned business functionalities work as expected
   ●Ensure that the JSON server is set up properly to facilitate access and storage of data
 The application should not close, exit, or throw an unhandled exception if the user specifies invalid input.
+
+Note: I have only three days to complete this project, i am going to use Visual Studio Code IDE for this,generate solutions step by step so it will easy for me to complete the project,
+before generating steps and solutions if you need further clarification, ask me..
