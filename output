@@ -1,40 +1,54 @@
-export class CalculateComponent {
+===plans.html===
+<h2>Available Insurance Plans</h2>
+<div style="display:flex; gap:16px; flex-wrap:wrap">
+  <mat-card *ngFor="let plan of plans" style="width:300px">
+    <mat-card-title>{{ plan.planName }}</mat-card-title>
+    <mat-card-content>
+      <p>{{ plan.description }}</p>
+      <p><strong>Base Amount:</strong> ₹{{ plan.baseAmt }}</p>
+      <p><strong>Validity:</strong> {{ plan.validity }} days</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary"
+      (click)="buyNow(plan.planId)">Buy Now</button>
+      <button mat-raised-button color="primary" routerLink="/calculate">Calculate Premium</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+===plans.ts===
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { PlanService } from '../../services/plan.service';
+import { Plan } from '../../model/plan.model';
  
-  premiumAmount: number | null = null;
+@Component({
+  selector: 'app-plans',
+  standalone: true,
+  imports: [CommonModule, MatCardModule, MatButtonModule],
+  templateUrl: './plans.html',
+  styleUrl: './plans.css'
+})
+export class Plans implements OnInit {
  
-  constructor(private fb: FormBuilder) {}
+  plans: Plan[] = [];
  
-  insuranceForm = this.fb.group({
-    age: ['', [Validators.required, Validators.min(1)]],
-    income: ['', Validators.required],
-    healthCondition: ['', Validators.required]
-  });
+  constructor(
+    private planService: PlanService,
+    private router: Router
+  ) {}
  
-  calculatePremium() {
-    const age = Number(this.insuranceForm.value.age);
-    const income = Number(this.insuranceForm.value.income);
-    const health = this.insuranceForm.value.healthCondition;
+  ngOnInit(): void {
+    this.planService.getAllPlans().subscribe(data => {
+      this.plans = data;
+    });
+  }
  
-    let premium = 2500; // base amount
- 
-    // 🔹 Rule-based logic
-    if (age > 40) premium += 1000;
-    if (income > 500000) premium += 500;
-    if (health === 'yes') premium += 1500;
- 
-    this.premiumAmount = premium;
+  buyNow(planId: number) {
+    this.router.navigate(['/plan', planId]);
   }
 }
-----------------------------------------------
-Application bundle generation failed. [0.139 seconds] - 2025-12-24T06:25:02.037Z
 
-X [ERROR] TS2729: Property 'fb' is used before its initialization. [plugin angular-compiler]
-
-    src/app/components/calculate/calculate.ts:28:23:
-      28 │   insuranceForm = this.fb.group({
-         ╵                        ~~
-
-  'fb' is declared here.
-
-    src/app/components/calculate/calculate.ts:26:14:
-      26 │   constructor(private fb: FormBuilder) {}
+give me the updated code, 
