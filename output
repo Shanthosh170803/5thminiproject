@@ -1,54 +1,31 @@
-===plans.html===
-<h2>Available Insurance Plans</h2>
-<div style="display:flex; gap:16px; flex-wrap:wrap">
-  <mat-card *ngFor="let plan of plans" style="width:300px">
-    <mat-card-title>{{ plan.planName }}</mat-card-title>
-    <mat-card-content>
-      <p>{{ plan.description }}</p>
-      <p><strong>Base Amount:</strong> ₹{{ plan.baseAmt }}</p>
-      <p><strong>Validity:</strong> {{ plan.validity }} days</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary"
-      (click)="buyNow(plan.planId)">Buy Now</button>
-      <button mat-raised-button color="primary" routerLink="/calculate">Calculate Premium</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
-===plans.ts===
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
-import { PlanService } from '../../services/plan.service';
-import { Plan } from '../../model/plan.model';
- 
-@Component({
-  selector: 'app-plans',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
-  templateUrl: './plans.html',
-  styleUrl: './plans.css'
-})
-export class Plans implements OnInit {
- 
-  plans: Plan[] = [];
- 
-  constructor(
-    private planService: PlanService,
-    private router: Router
-  ) {}
- 
-  ngOnInit(): void {
-    this.planService.getAllPlans().subscribe(data => {
-      this.plans = data;
-    });
-  }
- 
-  buyNow(planId: number) {
-    this.router.navigate(['/plan', planId]);
-  }
-}
+C:\Users\shanthosh.s1\Angular\fifthproject\insurance-service>npx ng serve
+Application bundle generation failed. [2.664 seconds] - 2025-12-24T06:50:22.670Z
 
-give me the updated code, 
+X [ERROR] TS2729: Property 'fb' is used before its initialization. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.ts:24:23:
+      24 │   insuranceForm = this.fb.group({
+         ╵                        ~~
+
+  'fb' is declared here.
+
+    src/app/components/calculate/calculate.ts:30:14:
+      30 │   constructor(private fb: FormBuilder, private route: ActivatedRou...
+         ╵               ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2339: Property 'planName' does not exist on type 'Plan[]'. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.ts:40:31:
+      40 │           this.planName = plan.planName;
+         ╵                                ~~~~~~~~
+
+
+X [ERROR] TS2339: Property 'baseAmt' does not exist on type 'Plan[]'. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.ts:41:34:
+      41 │           this.planBaseAmt = plan.baseAmt;
+         ╵                                   ~~~~~~~
+
+
+Watch mode enabled. Watching for file changes...
