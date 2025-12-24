@@ -1,144 +1,137 @@
-i will give you my plans.ts,calculate.ts,plans.html
 
-===plans.ts===
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
- 
-import { PlanService } from '../../services/plan.service';
-import { Plan } from '../../model/plan.model';
- 
-@Component({
-  selector: 'app-plans',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
-  templateUrl: './plans.html',
-  styleUrl: './plans.css'
-})
-export class Plans implements OnInit {
- 
-  plans: Plan[] = [];
- 
-  constructor(
-    private planService: PlanService,
-    private router: Router
-  ) {}
- 
-  ngOnInit(): void {
-    this.planService.getAllPlans().subscribe(data => {
-      this.plans = data;
-    });
-  }
- 
-  buyNow(planId: number) {
-    this.router.navigate(['/plan', planId]);
-  }
- 
-  calculatePremium(planId: number) {
-    // pass selected plan id to calculator
-    this.router.navigate(['/calculate'], {
-      queryParams: { planId: planId }
-    });
-  }
-}
-===calculate.ts===
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { PlanService } from '../../services/plan.service';
-import { Plan } from '../../model/plan.model';
- 
-@Component({
-  selector: 'app-calculate',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  templateUrl: './calculate.html',
-})
-export class CalculateComponent implements OnInit {
- 
-  premiumAmount: number | null = null;
-  planId: number | null = null;
-  planName: string = '';
-  planBaseAmt: number = 0;
-  insuranceForm: FormGroup;
- 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private planService: PlanService) {
-    this.insuranceForm = this.fb.group({
-      age: ['', [Validators.required, Validators.min(1)]],
-      income: ['', Validators.required],
-      healthCondition: ['', Validators.required]
-    });
-  }
- 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.planId = params['planId'] ? Number(params['planId']) : null;
- 
-      if (this.planId) {
-        this.planService.getPlanById(this.planId).subscribe(plans => {
-          if (plans.length > 0) {
-            const plan = plans[0];  // select the first plan
-            this.planName = plan.planName;
-            this.planBaseAmt = plan.baseAmt;
-          }
-        });
-      }
-    });
-  }
- 
-  calculatePremium() {
-    const age = Number(this.insuranceForm.value.age);
-    const income = Number(this.insuranceForm.value.income);
-    const health = this.insuranceForm.value.healthCondition;
- 
-    let premium = this.planBaseAmt || 2500;
- 
-    if (age > 40) premium += 1000;
-    if (income > 500000) premium += 500;
-    if (health === 'yes') premium += 1500;
- 
-    this.premiumAmount = premium;
-  }
-}
-===plans.html===
-<h2>Available Insurance Plans</h2>
- 
-<div style="display:flex; gap:16px; flex-wrap:wrap">
-  <mat-card *ngFor="let plan of plans" style="width:300px">
-    
-    <mat-card-title>{{ plan.planName }}</mat-card-title>
- 
-    <mat-card-content>
-      <p>{{ plan.description }}</p>
-      <p><strong>Base Amount:</strong> ₹{{ plan.baseAmt }}</p>
-      <p><strong>Validity:</strong> {{ plan.validity }} days</p>
-    </mat-card-content>
- 
-    <mat-card-actions>
-      <!-- View / Buy -->
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="buyNow(plan.planId)">
-        Buy Now
-      </button>
- 
-      <!-- Calculate Premium -->
-      <button
-        mat-stroked-button
-        color="accent"
-        (click)="calculatePremium(plan.planId)">
-        Calculate Premium
-      </button>
-    </mat-card-actions>
- 
-  </mat-card>
-</div>
+X [ERROR] NG8001: 'mat-card' is not a known element:
+1. If 'mat-card' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
 
-update the entire codes
+    src/app/components/calculate/calculate.html:4:0:
+      4 │ <mat-card style="margin-bottom:20px">
+        ╵ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8001: 'mat-card-title' is not a known element:
+1. If 'mat-card-title' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card-title' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.html:5:2:
+      5 │   <mat-card-title>Selected Plan</mat-card-title>
+        ╵   ~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8001: 'mat-card-content' is not a known element:
+1. If 'mat-card-content' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.html:7:2:
+      7 │   <mat-card-content>
+        ╵   ~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8001: 'mat-card' is not a known element:
+1. If 'mat-card' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.html:14:0:
+      14 │ <mat-card>
+         ╵ ~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8001: 'mat-card-title' is not a known element:
+1. If 'mat-card-title' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card-title' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.html:15:2:
+      15 │   <mat-card-title>Enter Your Details</mat-card-title>
+         ╵   ~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8001: 'mat-card-content' is not a known element:
+1. If 'mat-card-content' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.html:17:2:
+      17 │   <mat-card-content>
+         ╵   ~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8001: 'mat-card' is not a known element:
+1. If 'mat-card' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.html:48:0:
+      48 │ <mat-card *ngIf="premiumAmount !== null" style="margin-top:20px; b...
+         ╵ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8001: 'mat-card-title' is not a known element:
+1. If 'mat-card-title' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card-title' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.html:49:2:
+      49 │   <mat-card-title>Calculated Premium</mat-card-title>
+         ╵   ~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8001: 'mat-card-content' is not a known element:
+1. If 'mat-card-content' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'mat-card-content' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/components/calculate/calculate.html:51:2:
+      51 │   <mat-card-content>
+         ╵   ~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component CalculateComponent.
+
+    src/app/components/calculate/calculate.ts:22:15:
+      22 │   templateUrl: './calculate.html',
+         ╵                ~~~~~~~~~~~~~~~~~~
+
+
+Watch mode enabled. Watching for file changes...
