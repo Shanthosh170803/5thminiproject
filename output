@@ -1,36 +1,97 @@
-estimated amount is displayed successfully, but the buy plan button is not redirecting to buy-plan page
-===plan-price.html===
-<div class="price-container">
-  <h2>{{ plan?.planName }}</h2>
- 
-  <div class="form-group">
-    <label>Enter Age</label>
-    <input type="number" [(ngModel)]="age">
-  </div>
- 
-  <div class="form-group">
-    <label>Annual Income</label>
-    <input type="number" [(ngModel)]="income">
-  </div>
- 
-  <div class="form-group">
-    <label>Any Health Issues?</label>
-    <div class="radio-group">
-      <label>
-        <input type="radio" name="health" value="yes" [(ngModel)]="healthIssue">
-        Yes
-      </label>
-      <label>
-        <input type="radio" name="health" value="no" [(ngModel)]="healthIssue">
-        No
-      </label>
-    </div>
-  </div>
- 
-  <button (click)="calculate()" [disabled]="!isValid()">Calculate Estimated Price</button>
- 
-  <div class="result" *ngIf="isCalculated">
-    <h3>Estimated Premium : ₹{{ premium }}</h3>
-    <button (click)="buyPlan()">Buy Plan</button>
-  </div>
+===buy-plan.html===
+<div class="buy-box">
+<h2>Buy {{plan?.planName}}</h2>
+
+<input placeholder="Name" [(ngModel)]="user.name">
+<input placeholder="City" [(ngModel)]="user.city">
+<input placeholder="Phone" [(ngModel)]="user.phone">
+<input placeholder="Email" [(ngModel)]="user.email">
+<input type="number" placeholder="Age" [(ngModel)]="user.age">
+
+<select [(ngModel)]="user.paymentMode">
+  <option value="">Select Payment Mode</option>
+  <option>Credit Card</option>
+  <option>Debit Card</option>
+</select>
+
+<input placeholder="Card Number (16 digits)" [(ngModel)]="user.cardNumber">
+
+<select [(ngModel)]="user.paymentFreq">
+  <option value="">Select Payment Frequency</option>
+  <option>Yearly</option>
+  <option>Half-Yearly</option>
+  <option>Monthly</option>
+</select>
+
+<h3>Premium : ₹{{premium}}</h3>
+
+<button (click)="submit()" [disabled]="!isValid()" class="btn">Buy Plan</button>
 </div>
+
+===buy-plan.ts===
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { InsuranceService } from '../../services/insurance';
+
+@Component({
+  selector: 'app-buy-plan',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './buy-plan.html',
+  styleUrls: ['./buy-plan.css']
+})
+export class BuyPlan implements OnInit {
+
+  plan:any;
+  premium:number = history.state.premium || 0;
+
+  user:any = {
+    name:'',
+    city:'',
+    phone:'',
+    email:'',
+    age:'',
+    paymentMode:'',
+    cardNumber:'',
+    paymentFreq:''
+  };
+
+  constructor(
+    private route:ActivatedRoute,
+    private service:InsuranceService,
+    private router:Router
+  ){}
+
+  ngOnInit(){
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.service.getPlanById(id).subscribe(res => this.plan = res[0]);
+  }
+
+  isValid(){
+    return this.user.name && this.user.city &&
+      this.user.phone.length === 10 &&
+      this.user.cardNumber.length === 16 &&
+      this.user.email.includes('@') &&
+      this.user.age > 0 &&
+      this.user.paymentMode &&
+      this.user.paymentFreq;
+  }
+
+  submit(){
+    const booking = {
+      ...this.user,
+      planId: this.plan.planId,
+      planName: this.plan.planName,
+      premiumAmt: this.premium,
+      validity: "2025-12-11"
+    };
+
+    this.service.saveBooking(booking).subscribe(()=>{
+      alert("🎉 Insurance Plan Purchased Successfully!");
+      this.router.navigate(['/my-policies']);
+    });
+  }
+}
+give me the updated code
