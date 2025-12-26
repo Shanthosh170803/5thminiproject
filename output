@@ -1,32 +1,22 @@
-in my point of view , my project is not fully completed
-i will give you the incomplete things in my project,
+This url is working: http://localhost:3333/plans
+[
+  {
+    "planId": 1,
+    "planName": "Care Life Plan",
+    "description": "Instant coverage with no waiting period.",
+    "baseAmt": 2500,
+    "validity": 15,
+    "id": "b896"
+  },
+  {
+    "planId": 2,
+    "planName": "Good Health Plan",
+    "description": "Air ambulance and BNPL options.",
+    "baseAmt": 2500,
+    "validity": 30,
+    "id": "10c7"
+  }
+]
 
-1) there is no home page. my project is directly running only in http://localhost:4200/plans , but i want it run on http://localhost:4200 as a home page.
-  in the home page it should have a navbar at the top and footer at the bottom. the navbar contains the insurance company name on the left and (home,plans,MyPlans,about us) tabs on the right end of the page.
-  if the user clicks plans tab  it should redirect to the plans page and about page should be redirect if user click about tab. Also in the home page i need a button named a "Browse our Plans" , if that is clicked it should redirect to plans page.
-2) i have upload a image, you can take it as a reference for the home page. i have the image in my device, tell me where i should keep the image in my project folder.
-3) i want some validations check in before user buying the plans , example:contact number should be of 10 digits, and so on.
-  Additional validation checks may be added as per general understanding.
-4) if user click MyPlans tab in the navbar it should display the plans details that they buy. it should show the all the plans that they bought even if the applications is restart.
-5) every page should follow the same navbar and footer.
-6) the footer must have the content "©2025 Company Name | All Rights Received"
-7) in payment ,currently we only card payment method and user need to type card number manually, but i want select payment method with(debit card or credit card).
-  based on the user select , the user will give the card number details.(Note : the card number(both debit and credit) should be 16 digits which have a whitespace for every 4 digits)
-8) this is the sample user details,
-{
-"id": 1,
-"name": "Justin",
-"city": "Chennai",
-"phone": "2780808989",
-"email": "hello@gmail.com",
-"age": "35",
-“planId”: 2,
-"planName": "Good Health Plan",
-"validity": 30,
-"paymentMode": "credit card",
-"cardNumber": "1234 1234 1234 1234",
-"premiumAmt": 2500,
-"paymentFreq": "yearly"
-},
-
-if you need further clarification , ask me
+but this url is not working:http://localhost:4200/plans
+this is not showing the plans, what might be the error. which files do you need to cross check..?
