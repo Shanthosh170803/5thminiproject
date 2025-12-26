@@ -10,6 +10,31 @@
     <img src="/assets/images/banner.jpg">
   </div>
 </div>
+===home.css===
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70vh;
+}
+ 
+.home-text {
+  width: 50%;
+}
+ 
+.home-text h1 {
+  font-size: 42px;
+}
+ 
+.home-text p {
+  font-size: 20px;
+  color: #555;
+  margin: 15px 0;
+}
+ 
+.home-img img {
+  width: 380px;
+}
 ===home.ts===
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
@@ -29,3 +54,4 @@ export class Home {
 }
 
 the button in home page is not redirecting to plans page
+and i want the home page a little more professional, because there is only two things are in my home page(image and text). both are present at the end (left end and right end) of the home page and it makes more blank space in the center of the page, so make is little professional look
