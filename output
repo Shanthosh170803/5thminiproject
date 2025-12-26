@@ -1,97 +1,87 @@
-===buy-plan.html===
-<div class="buy-box">
-<h2>Buy {{plan?.planName}}</h2>
-
-<input placeholder="Name" [(ngModel)]="user.name">
-<input placeholder="City" [(ngModel)]="user.city">
-<input placeholder="Phone" [(ngModel)]="user.phone">
-<input placeholder="Email" [(ngModel)]="user.email">
-<input type="number" placeholder="Age" [(ngModel)]="user.age">
-
-<select [(ngModel)]="user.paymentMode">
-  <option value="">Select Payment Mode</option>
-  <option>Credit Card</option>
-  <option>Debit Card</option>
-</select>
-
-<input placeholder="Card Number (16 digits)" [(ngModel)]="user.cardNumber">
-
-<select [(ngModel)]="user.paymentFreq">
-  <option value="">Select Payment Frequency</option>
-  <option>Yearly</option>
-  <option>Half-Yearly</option>
-  <option>Monthly</option>
-</select>
-
-<h3>Premium : ₹{{premium}}</h3>
-
-<button (click)="submit()" [disabled]="!isValid()" class="btn">Buy Plan</button>
-</div>
-
-===buy-plan.ts===
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { InsuranceService } from '../../services/insurance';
-
-@Component({
-  selector: 'app-buy-plan',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './buy-plan.html',
-  styleUrls: ['./buy-plan.css']
-})
-export class BuyPlan implements OnInit {
-
-  plan:any;
-  premium:number = history.state.premium || 0;
-
-  user:any = {
-    name:'',
-    city:'',
-    phone:'',
-    email:'',
-    age:'',
-    paymentMode:'',
-    cardNumber:'',
-    paymentFreq:''
-  };
-
-  constructor(
-    private route:ActivatedRoute,
-    private service:InsuranceService,
-    private router:Router
-  ){}
-
-  ngOnInit(){
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.service.getPlanById(id).subscribe(res => this.plan = res[0]);
-  }
-
-  isValid(){
-    return this.user.name && this.user.city &&
-      this.user.phone.length === 10 &&
-      this.user.cardNumber.length === 16 &&
-      this.user.email.includes('@') &&
-      this.user.age > 0 &&
-      this.user.paymentMode &&
-      this.user.paymentFreq;
-  }
-
-  submit(){
-    const booking = {
-      ...this.user,
-      planId: this.plan.planId,
-      planName: this.plan.planName,
-      premiumAmt: this.premium,
-      validity: "2025-12-11"
-    };
-
-    this.service.saveBooking(booking).subscribe(()=>{
-      alert("🎉 Insurance Plan Purchased Successfully!");
-      this.router.navigate(['/my-policies']);
-    });
-  }
+===db.json===
+{
+  "plans": [
+    {
+      "id": 1,
+      "name": "Care Life Plan",
+      "description": "Basic coverage with low premium.",
+      "coverage": 200000,
+      "price": 3500
+    },
+    {
+      "id": 2,
+      "name": "Good Health Plan",
+      "description": "Advanced healthcare with more benefits.",
+      "coverage": 500000,
+      "price": 5000
+    },
+    {
+      "id": 3,
+      "name": "Secure Family Plan",
+      "description": "Complete family protection.",
+      "coverage": 1000000,
+      "price": 8000
+    }
+  ],
+  "bookings": [
+    {
+      "id": "648c",
+      "name": "Shanthosh",
+      "city": "Rasipuram",
+      "phone": "7449085045",
+      "email": "shanthosh170803@gmail.com",
+      "age": 55,
+      "paymentMode": "Credit Card",
+      "cardNumber": "1234123412341234",
+      "paymentFreq": "Half-Yearly",
+      "planId": 1,
+      "planName": "Care Life Plan",
+      "premiumAmt": 5000,
+      "validity": "2025-12-11"
+    },
+    {
+      "id": "eed0",
+      "name": "Siran",
+      "city": "Coimbatore",
+      "phone": "9876543210",
+      "email": "siran123@gmail.com",
+      "age": 55,
+      "paymentMode": "Credit Card",
+      "cardNumber": "1234123412341234",
+      "paymentFreq": "Half-Yearly",
+      "planId": 1,
+      "planName": "Care Life Plan",
+      "premiumAmt": 5000,
+      "validity": "2025-12-11"
+    },
+    {
+      "id": "d131",
+      "name": "Tharun",
+      "city": "Attur",
+      "phone": "9876543120",
+      "email": "tharun@gmail.com",
+      "age": 25,
+      "paymentMode": "Debit Card",
+      "cardNumber": "4321432143214321",
+      "paymentFreq": "Monthly",
+      "planId": 2,
+      "planName": "Good Health Plan",
+      "premiumAmt": 4000,
+      "validity": "2025-12-11"
+    },
+    {
+      "id": "d091",
+      "name": "Praveen",
+      "city": "Mettur",
+      "phone": 9876543211,
+      "email": "praveen@gmail.com",
+      "age": 56,
+      "paymentMode": "Credit Card",
+      "cardNumber": 1234123412341234,
+      "paymentFreq": "Monthly",
+      "planId": 1,
+      "premiumAmt": 6500,
+      "validity": "2025-12-11"
+    }
+  ]
 }
-give me the updated code
