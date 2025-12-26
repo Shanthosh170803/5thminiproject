@@ -1,15 +1,79 @@
-C:\Users\shanthosh.s1>git --version
-git version 2.49.0.windows.1
+===plans.html===
+<h2 class="title">Our Insurance Plans</h2>
+ 
+<div class="plans-container">
+  <div class="plan-card" *ngFor="let p of plans">
+    <h3>Care Life Plan</h3>
+    <p>Basic coverage with low premium.</p>
+    <p><b>Coverage:</b> ₹2,00,000</p>
+    <p><b>Starting at:</b> ₹3500 / year</p>
+    <button (click)="goToPrice(p.id)">View Details</button>
+    </div>
 
-C:\Users\shanthosh.s1>node -v
-v24.3.0
+    <div class="plan-card" *ngFor="let p of plans">
+    <h3>Good Health Plan</h3>
+    <p>Advanced healthcare with more benefits.</p>
+    <p><b>Coverage:</b> ₹5,00,000</p>
+    <p><b>Starting at:</b> ₹5000 / year</p>
+    <button (click)="goToPrice(p.id)">View Details</button>
+    </div>
 
-C:\Users\shanthosh.s1>npm -v
-11.4.2
+    <div class="plan-card" *ngFor="let p of plans">
+    <h3>Secure Family Plan</h3>
+    <p>Complete family protection.</p>
+    <p><b>Coverage:</b> ₹10,00,000</p>
+    <p><b>Starting at:</b> ₹8000 / year</p>
+    <button (click)="goToPrice(p.id)">View Details</button>
+  </div>
+  </div>
 
-C:\Users\shanthosh.s1>cd Angular
+===plans.css===
+.title{
+  text-align: center;
+  font-size: 30px;
+  color: #1976d2;
+  margin-bottom: 30px;
+}
+ 
+.plans-container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+ 
+.plan-card{
+  width: 280px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+ 
+.plan-card h3{
+  color: #1976d2;
+  margin-bottom: 10px;
+}
+ 
+.plan-card p{
+  font-size: 14px;
+  margin: 6px 0;
+}
+ 
+.plan-card button{
+  margin-top: 15px;
+  padding: 8px 15px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+ 
+.plan-card button:hover{
+  background: #125aa0;
+}
 
-C:\Users\shanthosh.s1\Angular>git clone https://github.com/Shanthosh170803/raindrops-insurance.git fifthproject
-fatal: destination path 'fifthproject' already exists and is not an empty directory.
+why the plans are displying two times..?
 
-C:\Users\shanthosh.s1\Angular>
