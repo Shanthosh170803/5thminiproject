@@ -1,3 +1,12 @@
+C:\Users\shanthosh.s1>git --version
+git version 2.49.0.windows.1
+
+C:\Users\shanthosh.s1>node -v
+v24.3.0
+
+C:\Users\shanthosh.s1>npm -v
+11.4.2
+
 C:\Users\shanthosh.s1>cd Angular
 
 C:\Users\shanthosh.s1\Angular>git clone https://github.com/Shanthosh170803/raindrops-insurance.git fifthproject
