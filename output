@@ -1,87 +1,31 @@
-===db.json===
-{
-  "plans": [
-    {
-      "id": 1,
-      "name": "Care Life Plan",
-      "description": "Basic coverage with low premium.",
-      "coverage": 200000,
-      "price": 3500
-    },
-    {
-      "id": 2,
-      "name": "Good Health Plan",
-      "description": "Advanced healthcare with more benefits.",
-      "coverage": 500000,
-      "price": 5000
-    },
-    {
-      "id": 3,
-      "name": "Secure Family Plan",
-      "description": "Complete family protection.",
-      "coverage": 1000000,
-      "price": 8000
-    }
-  ],
-  "bookings": [
-    {
-      "id": "648c",
-      "name": "Shanthosh",
-      "city": "Rasipuram",
-      "phone": "7449085045",
-      "email": "shanthosh170803@gmail.com",
-      "age": 55,
-      "paymentMode": "Credit Card",
-      "cardNumber": "1234123412341234",
-      "paymentFreq": "Half-Yearly",
-      "planId": 1,
-      "planName": "Care Life Plan",
-      "premiumAmt": 5000,
-      "validity": "2025-12-11"
-    },
-    {
-      "id": "eed0",
-      "name": "Siran",
-      "city": "Coimbatore",
-      "phone": "9876543210",
-      "email": "siran123@gmail.com",
-      "age": 55,
-      "paymentMode": "Credit Card",
-      "cardNumber": "1234123412341234",
-      "paymentFreq": "Half-Yearly",
-      "planId": 1,
-      "planName": "Care Life Plan",
-      "premiumAmt": 5000,
-      "validity": "2025-12-11"
-    },
-    {
-      "id": "d131",
-      "name": "Tharun",
-      "city": "Attur",
-      "phone": "9876543120",
-      "email": "tharun@gmail.com",
-      "age": 25,
-      "paymentMode": "Debit Card",
-      "cardNumber": "4321432143214321",
-      "paymentFreq": "Monthly",
-      "planId": 2,
-      "planName": "Good Health Plan",
-      "premiumAmt": 4000,
-      "validity": "2025-12-11"
-    },
-    {
-      "id": "d091",
-      "name": "Praveen",
-      "city": "Mettur",
-      "phone": 9876543211,
-      "email": "praveen@gmail.com",
-      "age": 56,
-      "paymentMode": "Credit Card",
-      "cardNumber": 1234123412341234,
-      "paymentFreq": "Monthly",
-      "planId": 1,
-      "premiumAmt": 6500,
-      "validity": "2025-12-11"
-    }
-  ]
+===home.html===
+<div class="home">
+  <div class="home-text">
+    <h1>Get the Best Health Insurance</h1>
+    <p>Maximum coverage at the lowest price</p>
+    <button class="btn" routerLink="/plans">Browse Plans</button>
+  </div>
+ 
+  <div class="home-img">
+    <img src="/assets/images/banner.jpg">
+  </div>
+</div>
+===home.ts===
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.html',
+  styleUrls: ['./home.css']
+})
+export class Home {
+
+  constructor(private router: Router) {}
+
+  goToPlans() {
+    this.router.navigate(['/plans']);
+  }
 }
+
+the button in home page is not redirecting to plans page
