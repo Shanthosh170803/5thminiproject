@@ -1,47 +1,57 @@
-===plan-price.html===
-<h2>{{plan?.planName}}</h2>
+===plan-price.ts===
 
-<label>Enter Age:</label>
-<input type="number" [(ngModel)]="age">
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { InsuranceService } from '../../services/insurance';
 
-<label>Annual Income:</label>
-<input type="number" [(ngModel)]="income">
+@Component({
+  selector: 'app-plan-price',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './plan-price.html',
+  styleUrls: ['./plan-price.css']
+})
+export class PlanPrice implements OnInit {
 
-<label>Any Health Issues?</label><br>
-<div style="display: flex; flex-direction: row;">
-  <input type="radio" name="health" value="yes" [(ngModel)]="healthIssue">
-<label for="health">Yes</label>
-</div>
-<div style="display: flex; flex-direction: row;">
-  <input type="radio" name="health" value="no" [(ngModel)]="healthIssue">
-<label for="health" >No</label>
-</div>
+  plan:any;
+  age:number = 0;
+  income:number = 0;
+  healthIssue:string = '';
+  premium:number = 0;
+  isCalculated:boolean = false;
 
+  constructor(
+    private route:ActivatedRoute,
+    private service:InsuranceService,
+    private router:Router
+  ){}
 
-<br><br>
+  ngOnInit(){
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.service.getPlanById(id).subscribe(res=>{
+      this.plan = res[0];
+    });
+  }
 
+  calculate(){
+    this.premium = this.plan.baseAmt;
 
-<button (click)="calculate()" [disabled]="!isValid()">Calculate Estimated Price</button>
+    if(this.age > 40) this.premium += 1000;
+    if(this.income > 500000) this.premium += 500;
+    if(this.healthIssue === 'yes') this.premium += 1500;
 
-<div *ngIf="isCalculated">
-  <h3>Estimated Premium : ₹{{premium}}</h3>
-  <button (click)="buyPlan()">Buy Plan</button>
-</div>
-===plan-price.css===
-input{
- display:block;
- margin-bottom:10px;
- padding:5px;
+    this.isCalculated = true;
+  }
+
+  buyPlan(){
+    this.router.navigate(['/buy', this.plan.planId], {
+      state: { premium: this.premium }
+    });
+  }
+
+  isValid(){
+    return this.age > 0 && this.income > 0;
+  }
 }
-button{
- background:#0d6efd;
- color:white;
- padding:6px 12px;
- border:none;
-}
-button:disabled{
- background:#aaa;
-}
-
-the radio buttons are in center of the page and the yes/no options are at the right end of the page
-make it more professional
